@@ -1,0 +1,242 @@
+[
+  {
+    "id": "chem-atm-e1",
+    "subject": "chemistry",
+    "chapter": "Atomic Structure",
+    "difficulty": "easy",
+    "question": "What is the maximum number of electrons that can be accommodated in a principal quantum shell with n = 3?",
+    "options": [
+      { "id": "A", "text": "8" },
+      { "id": "B", "text": "18" },
+      { "id": "C", "text": "32" },
+      { "id": "D", "text": "10" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The maximum number of electrons in a shell with principal quantum number n is given by 2n². For n = 3, 2(3)² = 18 electrons."
+  },
+  {
+    "id": "chem-atm-e2",
+    "subject": "chemistry",
+    "chapter": "Atomic Structure",
+    "difficulty": "easy",
+    "question": "Which quantum number specifies the spatial orientation of an orbital?",
+    "options": [
+      { "id": "A", "text": "Principal quantum number (n)" },
+      { "id": "B", "text": "Azimuthal quantum number (l)" },
+      { "id": "C", "text": "Magnetic quantum number (m_l)" },
+      { "id": "D", "text": "Spin quantum number (m_s)" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "The magnetic quantum number (m_l) determines the orientation in space of the orbital of a given energy and shape."
+  },
+  {
+    "id": "chem-atm-m1",
+    "subject": "chemistry",
+    "chapter": "Atomic Structure",
+    "difficulty": "medium",
+    "question": "What is the de Broglie wavelength of an electron moving with a velocity of 2.0 × 10^6 m/s? (m_e = 9.1 × 10^-31 kg, h = 6.626 × 10^-34 J·s)",
+    "options": [
+      { "id": "A", "text": "0.364 nm" },
+      { "id": "B", "text": "3.64 nm" },
+      { "id": "C", "text": "0.036 nm" },
+      { "id": "D", "text": "1.82 nm" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "λ = h / (m · v) = (6.626 × 10^-34) / (9.1 × 10^-31 × 2.0 × 10^6) = 3.64 × 10^-10 m = 0.364 nm."
+  },
+  {
+    "id": "chem-atm-h1",
+    "subject": "chemistry",
+    "chapter": "Atomic Structure",
+    "difficulty": "hard",
+    "question": "For a hydrogen-like atom with atomic number Z, the radius of the nth Bohr orbit is proportional to:",
+    "options": [
+      { "id": "A", "text": "n² / Z" },
+      { "id": "B", "text": "n / Z²" },
+      { "id": "C", "text": "Z / n²" },
+      { "id": "D", "text": "n² · Z" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "The radius of the nth orbit in Bohr model is r_n = (a_0 · n²) / Z, where a_0 is the first Bohr radius (0.529 Å). Hence r is proportional to n² / Z."
+  },
+  {
+    "id": "chem-bnd-e1",
+    "subject": "chemistry",
+    "chapter": "Chemical Bonding",
+    "difficulty": "easy",
+    "question": "What is the molecular geometry of methane (CH4) according to VSEPR theory?",
+    "options": [
+      { "id": "A", "text": "Square planar" },
+      { "id": "B", "text": "Tetrahedral" },
+      { "id": "C", "text": "Trigonal pyramidal" },
+      { "id": "D", "text": "Linear" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Carbon in CH4 has 4 bonding pairs and 0 lone pairs (sp³ hybridized), resulting in a regular tetrahedral geometry with bond angles of 109.5°."
+  },
+  {
+    "id": "chem-bnd-m1",
+    "subject": "chemistry",
+    "chapter": "Chemical Bonding",
+    "difficulty": "medium",
+    "question": "Which of the following molecules has a dipole moment of zero (non-polar)?",
+    "options": [
+      { "id": "A", "text": "NH3" },
+      { "id": "B", "text": "H2O" },
+      { "id": "C", "text": "BF3" },
+      { "id": "D", "text": "SO2" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Boron trifluoride (BF3) has trigonal planar geometry (120° bond angles). The three equal B-F bond dipole vectors cancel symmetrically, resulting in a net dipole moment of zero."
+  },
+  {
+    "id": "chem-bnd-h1",
+    "subject": "chemistry",
+    "chapter": "Chemical Bonding",
+    "difficulty": "hard",
+    "question": "According to Molecular Orbital (MO) theory, which of the following diatomic species is paramagnetic with a bond order of 2?",
+    "options": [
+      { "id": "A", "text": "N2" },
+      { "id": "B", "text": "O2" },
+      { "id": "C", "text": "C2" },
+      { "id": "D", "text": "F2" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "O2 has 16 electrons. Its electronic configuration in MO theory places two unpaired electrons in degenerate antibonding π*2px and π*2py orbitals, making it paramagnetic with bond order = (10 - 6) / 2 = 2."
+  },
+  {
+    "id": "chem-thm-e1",
+    "subject": "chemistry",
+    "chapter": "Thermodynamics",
+    "difficulty": "easy",
+    "question": "For a spontaneous chemical process at constant temperature and pressure, the change in Gibbs free energy (ΔG) must be:",
+    "options": [
+      { "id": "A", "text": "Zero" },
+      { "id": "B", "text": "Negative (ΔG < 0)" },
+      { "id": "C", "text": "Positive (ΔG > 0)" },
+      { "id": "D", "text": "Indeterminate without enthalpy" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "According to the Second Law of Thermodynamics, a spontaneous process at constant temperature and pressure is characterized by a decrease in Gibbs free energy (ΔG < 0)."
+  },
+  {
+    "id": "chem-thm-m1",
+    "subject": "chemistry",
+    "chapter": "Thermodynamics",
+    "difficulty": "medium",
+    "question": "For the reaction 2SO2(g) + O2(g) -> 2SO3(g), the value of Δn_g (change in moles of gaseous species) is:",
+    "options": [
+      { "id": "A", "text": "+1" },
+      { "id": "B", "text": "-1" },
+      { "id": "C", "text": "0" },
+      { "id": "D", "text": "-2" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Δn_g = moles of gaseous products - moles of gaseous reactants = 2 - (2 + 1) = 2 - 3 = -1."
+  },
+  {
+    "id": "chem-thm-h1",
+    "subject": "chemistry",
+    "chapter": "Thermodynamics",
+    "difficulty": "hard",
+    "question": "A reaction has ΔH° = +40 kJ/mol and ΔS° = +100 J/(K·mol). Above what temperature does the reaction become spontaneous at standard state?",
+    "options": [
+      { "id": "A", "text": "300 K" },
+      { "id": "B", "text": "400 K" },
+      { "id": "C", "text": "250 K" },
+      { "id": "D", "text": "500 K" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "For spontaneity, ΔG = ΔH - TΔS < 0 => T > ΔH / ΔS. Here ΔH = 40,000 J/mol and ΔS = 100 J/(K·mol). T > 40,000 / 100 = 400 K."
+  },
+  {
+    "id": "chem-kin-e1",
+    "subject": "chemistry",
+    "chapter": "Chemical Kinetics",
+    "difficulty": "easy",
+    "question": "What are the SI units of the rate constant (k) for a first-order chemical reaction?",
+    "options": [
+      { "id": "A", "text": "mol·L^-1·s^-1" },
+      { "id": "B", "text": "s^-1" },
+      { "id": "C", "text": "L·mol^-1·s^-1" },
+      { "id": "D", "text": "L²·mol^-2·s^-1" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "For an nth-order reaction, units of k are (mol·L^-1)^(1-n)·s^-1. For n = 1, (mol·L^-1)^0·s^-1 = s^-1."
+  },
+  {
+    "id": "chem-kin-m1",
+    "subject": "chemistry",
+    "chapter": "Chemical Kinetics",
+    "difficulty": "medium",
+    "question": "The half-life of a first-order reaction is 20 minutes. What percentage of the reactant will remain after 60 minutes?",
+    "options": [
+      { "id": "A", "text": "50%" },
+      { "id": "B", "text": "25%" },
+      { "id": "C", "text": "12.5%" },
+      { "id": "D", "text": "6.25%" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Number of half-lives elapsed = 60 / 20 = 3 half-lives. Fraction remaining = (1/2)^3 = 1/8 = 12.5%."
+  },
+  {
+    "id": "chem-kin-h1",
+    "subject": "chemistry",
+    "chapter": "Chemical Kinetics",
+    "difficulty": "hard",
+    "question": "According to the Arrhenius equation k = A · e^(-Ea / RT), a plot of ln(k) versus (1/T) yields a straight line with slope equal to:",
+    "options": [
+      { "id": "A", "text": "-Ea / R" },
+      { "id": "B", "text": "-Ea / (2.303 R)" },
+      { "id": "C", "text": "+Ea / R" },
+      { "id": "D", "text": "-R / Ea" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Taking natural logarithm: ln(k) = ln(A) - (Ea / R)(1/T). In standard y = mx + c form where y = ln(k) and x = 1/T, the slope m = -Ea / R."
+  },
+  {
+    "id": "chem-elc-e1",
+    "subject": "chemistry",
+    "chapter": "Electrochemistry",
+    "difficulty": "easy",
+    "question": "In a Galvanic cell, at which electrode does oxidation occur?",
+    "options": [
+      { "id": "A", "text": "Anode" },
+      { "id": "B", "text": "Cathode" },
+      { "id": "C", "text": "Salt bridge" },
+      { "id": "D", "text": "Both electrodes equally" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Oxidation always occurs at the anode (An Ox) and reduction occurs at the cathode (Red Cat) in all electrochemical cells."
+  },
+  {
+    "id": "chem-elc-m1",
+    "subject": "chemistry",
+    "chapter": "Electrochemistry",
+    "difficulty": "medium",
+    "question": "If standard reduction potentials are E°(Zn²⁺/Zn) = -0.76 V and E°(Cu²⁺/Cu) = +0.34 V, what is the standard EMF of the Daniel cell?",
+    "options": [
+      { "id": "A", "text": "+0.42 V" },
+      { "id": "B", "text": "+1.10 V" },
+      { "id": "C", "text": "-1.10 V" },
+      { "id": "D", "text": "-0.42 V" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "E°_cell = E°_cathode - E°_anode = E°(Cu²⁺/Cu) - E°(Zn²⁺/Zn) = 0.34 V - (-0.76 V) = +1.10 V."
+  },
+  {
+    "id": "chem-elc-h1",
+    "subject": "chemistry",
+    "chapter": "Electrochemistry",
+    "difficulty": "hard",
+    "question": "How much charge in Coulombs is required for the complete reduction of 1 mole of Al³⁺ ions to metallic aluminum? (1 Faraday ≈ 96500 C)",
+    "options": [
+      { "id": "A", "text": "96,500 C" },
+      { "id": "B", "text": "193,000 C" },
+      { "id": "C", "text": "289,500 C" },
+      { "id": "D", "text": "386,000 C" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Al³⁺ + 3e⁻ -> Al. Reducing 1 mole of Al³⁺ requires 3 moles of electrons = 3 Faradays = 3 × 96,500 C = 289,500 C."
+  }
+]

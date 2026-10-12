@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI QUIZ MASTER — Intelligent Learning & Quiz Generation Platform</title>
+  <meta name="description" content="Generate high-yield chapter quizzes in Physics, Chemistry, and Mathematics powered by Google Gemini AI and backed by a local verified question bank.">
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Background Glow Orbs -->
+  <div class="bg-orb orb-primary" aria-hidden="true"></div>
+  <div class="bg-orb orb-secondary" aria-hidden="true"></div>
+  <div class="bg-orb orb-tertiary" aria-hidden="true"></div>
+
+  <!-- Header Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#home" class="brand-link" id="nav-brand" aria-label="AI Quiz Master Home">
+        <img src="/public/assets/logo.svg" alt="AI Quiz Master Logo" class="brand-logo" width="36" height="36">
+        <div class="brand-text-group">
+          <span class="brand-title">AI QUIZ MASTER</span>
+          <span class="brand-subtitle">INTELLIGENT LEARNING PLATFORM</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active" id="nav-home">Home</a></li>
+          <li><a href="#configure" class="nav-link" id="nav-create">Create Quiz</a></li>
+          <li><a href="#features" class="nav-link" id="nav-features">Features</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-status">
+        <div class="status-pill" id="ai-status-indicator" title="Engine Status">
+          <span class="status-dot"></span>
+          <span class="status-text" id="ai-status-text">Checking System...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Content Area -->
+  <main class="app-main" id="app-main">
+
+    <!-- ================= VIEW 1: HOME & QUIZ CONFIGURATION ================= -->
+    <section id="view-home" class="view-section active" aria-labelledby="hero-heading">
+      
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-badge">
+          <span class="badge-icon">✨</span>
+          <span>Next-Generation STEM Assessment</span>
+        </div>
+        <h1 id="hero-heading" class="hero-title">
+          Learn Smarter. Practice Better. <br>
+          <span class="gradient-text">Master Every Chapter.</span>
+        </h1>
+        <p class="hero-description">
+          Generate comprehensive chapter-specific multiple-choice assessments across 
+          <strong>Physics</strong>, <strong>Chemistry</strong>, and <strong>Mathematics</strong>. 
+          Powered by Google Gemini AI with instant local question-bank fallback and verified explanations.
+        </p>
+        <div class="hero-actions">
+          <a href="#configure" class="btn btn-primary btn-lg" id="btn-hero-cta">
+            <span>Create Your Quiz</span>
+            <svg class="icon-arrow" viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+          <a href="#features" class="btn btn-secondary btn-lg" id="btn-hero-features">How It Works</a>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric-card">
+            <span class="metric-num">3</span>
+            <span class="metric-label">Core STEM Disciplines</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-card">
+            <span class="metric-num">50+</span>
+            <span class="metric-label">Predefined Chapters</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-card">
+            <span class="metric-num">100%</span>
+            <span class="metric-label">Verified Explanations</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz Configuration Section -->
+      <section id="configure" class="config-section" aria-labelledby="config-heading">
+        <div class="section-header">
+          <span class="section-tag">Step-by-Step Generator</span>
+          <h2 id="config-heading" class="section-title">Configure Your Customized Quiz</h2>
+          <p class="section-desc">Select your target subject, topic, difficulty, and question count below.</p>
+        </div>
+
+        <form id="quiz-config-form" class="config-form" novalidate>
+          
+          <!-- Step 1: Subject Selection -->
+          <div class="form-step" id="step-subject">
+            <div class="step-header">
+              <span class="step-badge">1</span>
+              <div>
+                <h3 class="step-title">Select Subject</h3>
+                <p class="step-subtitle">Pick the scientific or mathematical discipline to test</p>
+              </div>
+            </div>
+
+            <div class="subject-grid" role="radiogroup" aria-label="Subject Selection">
+              
+              <!-- Physics Card -->
+              <div class="subject-card" data-subject="physics" tabindex="0" role="radio" aria-checked="false" id="sub-card-physics">
+                <div class="subject-icon-box physics-icon">
+                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="2"/>
+                    <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(30 12 12)"/>
+                    <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(90 12 12)"/>
+                    <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(150 12 12)"/>
+                  </svg>
+                </div>
+                <div class="subject-card-body">
+                  <h4 class="subject-title">Physics</h4>
+                  <p class="subject-desc">Kinematics, Laws of Motion, Thermodynamics, Optics & Modern Physics.</p>
+                </div>
+                <div class="subject-check" aria-hidden="true">✓</div>
+              </div>
+
+              <!-- Chemistry Card -->
+              <div class="subject-card" data-subject="chemistry" tabindex="0" role="radio" aria-checked="false" id="sub-card-chemistry">
+                <div class="subject-icon-box chemistry-icon">
+                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 2v7.31L4.2 19.34A2 2 0 005.89 22h12.22a2 2 0 001.69-2.66L14 9.31V2"/>
+                    <path d="M8.5 2h7"/>
+                    <path d="M7 16h10"/>
+                  </svg>
+                </div>
+                <div class="subject-card-body">
+                  <h4 class="subject-title">Chemistry</h4>
+                  <p class="subject-desc">Atomic Structure, Bonding, Thermodynamics, Kinetics & Organic Basics.</p>
+                </div>
+                <div class="subject-check" aria-hidden="true">✓</div>
+              </div>
+
+              <!-- Mathematics Card -->
+              <div class="subject-card" data-subject="mathematics" tabindex="0" role="radio" aria-checked="false" id="sub-card-mathematics">
+                <div class="subject-icon-box math-icon">
+                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="2" width="16" height="20" rx="2"/>
+                    <line x1="8" y1="6" x2="16" y2="6"/>
+                    <line x1="8" y1="10" x2="10" y2="10"/>
+                    <line x1="14" y1="10" x2="16" y2="10"/>
+                    <line x1="8" y1="14" x2="10" y2="14"/>
+                    <line x1="14" y1="14" x2="16" y2="14"/>
+                    <line x1="8" y1="18" x2="16" y2="18"/>
+                  </svg>
+                </div>
+                <div class="subject-card-body">
+                  <h4 class="subject-title">Mathematics</h4>
+                  <p class="subject-desc">Calculus, Algebra, Trigonometry, Quadratics, Vectors & Probability.</p>
+                </div>
+                <div class="subject-check" aria-hidden="true">✓</div>
+              </div>
+
+            </div>
+            <div class="field-error" id="error-subject" role="alert" aria-live="polite"></div>
+          </div>
+
+          <!-- Step 2: Chapter Selection -->
+          <div class="form-step" id="step-chapter">
+            <div class="step-header">
+              <span class="step-badge">2</span>
+              <div>
+                <h3 class="step-title">Select Chapter / Topic</h3>
+                <p class="step-subtitle">Choose from predefined syllabus chapters or input a custom topic</p>
+              </div>
+            </div>
+
+            <!-- Predefined Topics Grid -->
+            <div class="chapter-container">
+              <div class="chapter-grid-header">
+                <span class="chapter-grid-title" id="chapter-list-title">Standard Topics</span>
+                <span class="chapter-hint">Click a card to select</span>
+              </div>
+              <div class="topics-grid" id="topics-grid" role="radiogroup" aria-label="Chapter Topics">
+                <div class="empty-topics-prompt">
+                  <span class="empty-icon">👈</span>
+                  <span>Please select a subject above to view available chapters.</span>
+                </div>
+              </div>
+
+              <!-- Custom Chapter Box -->
+              <div class="custom-chapter-box">
+                <div class="custom-chapter-header">
+                  <label for="custom-chapter-input" class="custom-chapter-label">
+                    <span>Or enter a Custom Chapter / Topic:</span>
+                  </label>
+                  <span class="custom-notice">Uses AI Generation</span>
+                </div>
+                <div class="custom-chapter-input-wrap">
+                  <input 
+                    type="text" 
+                    id="custom-chapter-input" 
+                    class="custom-chapter-input" 
+                    placeholder="e.g., Simple Harmonic Motion, Polymers, or Bayes' Theorem..." 
+                    maxlength="100"
+                    autocomplete="off"
+                  >
+                  <button type="button" class="btn btn-secondary btn-sm" id="btn-apply-custom">Set Custom</button>
+                  <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-custom" title="Clear custom chapter" style="display:none;">Clear</button>
+                </div>
+                <p class="custom-help-text">
+                  Note: Custom chapters are dynamically crafted by Gemini AI. If offline or unconfigured, local fallback may be unavailable for non-standard chapters.
+                </p>
+                <div class="field-error" id="error-chapter" role="alert" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Difficulty & Count Row -->
+          <div class="config-row-group">
+            
+            <!-- Difficulty Selection -->
+            <div class="form-step half-step" id="step-difficulty">
+              <div class="step-header">
+                <span class="step-badge">3</span>
+                <div>
+                  <h3 class="step-title">Difficulty Level</h3>
+                  <p class="step-subtitle">Calibrate conceptual depth</p>
+                </div>
+              </div>
+
+              <div class="segmented-control" role="radiogroup" aria-label="Difficulty Selection">
+                <label class="segment-label">
+                  <input type="radio" name="difficulty" value="easy" class="segment-radio">
+                  <div class="segment-pill easy-pill">
+                    <span class="pill-dot"></span>
+                    <span class="pill-name">Easy</span>
+                    <span class="pill-sub">Definitions & Basics</span>
+                  </div>
+                </label>
+                <label class="segment-label">
+                  <input type="radio" name="difficulty" value="medium" class="segment-radio" checked>
+                  <div class="segment-pill medium-pill">
+                    <span class="pill-dot"></span>
+                    <span class="pill-name">Medium</span>
+                    <span class="pill-sub">Concepts & Multi-Step</span>
+                  </div>
+                </label>
+                <label class="segment-label">
+                  <input type="radio" name="difficulty" value="hard" class="segment-radio">
+                  <div class="segment-pill hard-pill">
+                    <span class="pill-dot"></span>
+                    <span class="pill-name">Hard</span>
+                    <span class="pill-sub">Advanced Synthesis</span>
+                  </div>
+                </label>
+              </div>
+              <div class="field-error" id="error-difficulty" role="alert" aria-live="polite"></div>
+            </div>
+
+            <!-- Question Count Selection -->
+            <div class="form-step half-step" id="step-count">
+              <div class="step-header">
+                <span class="step-badge">4</span>
+                <div>
+                  <h3 class="step-title">Question Count</h3>
+                  <p class="step-subtitle">Choose assessment length</p>
+                </div>
+              </div>
+
+              <div class="segmented-control" role="radiogroup" aria-label="Question Count Selection">
+                <label class="segment-label">
+                  <input type="radio" name="count" value="5" class="segment-radio" checked>
+                  <div class="segment-pill">
+                    <span class="count-num">5</span>
+                    <span class="pill-name">Questions</span>
+                    <span class="pill-sub">Quick Sprint (~5 min)</span>
+                  </div>
+                </label>
+                <label class="segment-label">
+                  <input type="radio" name="count" value="10" class="segment-radio">
+                  <div class="segment-pill">
+                    <span class="count-num">10</span>
+                    <span class="pill-name">Questions</span>
+                    <span class="pill-sub">Standard Practice</span>
+                  </div>
+                </label>
+                <label class="segment-label">
+                  <input type="radio" name="count" value="20" class="segment-radio">
+                  <div class="segment-pill">
+                    <span class="count-num">20</span>
+                    <span class="pill-name">Questions</span>
+                    <span class="pill-sub">Full Mastery Exam</span>
+                  </div>
+                </label>
+              </div>
+              <div class="field-error" id="error-count" role="alert" aria-live="polite"></div>
+            </div>
+
+          </div>
+
+          <!-- Generation CTA Bar -->
+          <div class="generate-bar">
+            <div class="selection-summary" id="selection-summary">
+              <span class="summary-prefix">Current Selection:</span>
+              <span class="summary-tag" id="summary-subject">Physics</span>
+              <span class="summary-sep">/</span>
+              <span class="summary-tag" id="summary-chapter">Motion in a Straight Line</span>
+              <span class="summary-sep">/</span>
+              <span class="summary-tag" id="summary-difficulty">Medium</span>
+              <span class="summary-sep">/</span>
+              <span class="summary-tag" id="summary-count">5 Questions</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-xl btn-generate" id="btn-generate-quiz">
+              <span class="btn-text">Generate Quiz</span>
+              <div class="btn-spinner" id="btn-spinner" aria-hidden="true"></div>
+            </button>
+            <div class="generate-status-msg" id="generate-status-msg" aria-live="polite"></div>
+          </div>
+
+        </form>
+      </section>
+
+      <!-- Features Showcase Section -->
+      <section id="features" class="features-section" aria-labelledby="features-heading">
+        <div class="section-header">
+          <span class="section-tag">Architecture & Features</span>
+          <h2 id="features-heading" class="section-title">Built For Rigorous Academic Preparation</h2>
+          <p class="section-desc">Designed with high-reliability engineering, security, and educational pedagogy.</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon-box">🧠</div>
+            <h3 class="feature-title">Dynamic Gemini AI Integration</h3>
+            <p class="feature-desc">Utilizes Google's state-of-the-art GenAI models with structured JSON schema validation for curriculum-aligned questions.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box">🛡️</div>
+            <h3 class="feature-title">Local Question Bank Fallback</h3>
+            <p class="feature-desc">Zero downtime guarantee. When API limits are reached or before a key is configured, practice mode runs seamlessly from verified offline banks.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box">⚡</div>
+            <h3 class="feature-title">High-Demand Concurrency & Caching</h3>
+            <p class="feature-desc">Integrated in-flight deduplication, rate limiters, and bounded server caches protect API quotas and deliver sub-second responses.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box">🔒</div>
+            <h3 class="feature-title">Server-Side Answer Key Security</h3>
+            <p class="feature-desc">Answer keys and explanations remain securely isolated on the server until quiz submission, preventing client-side inspection cheats.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box">📊</div>
+            <h3 class="feature-title">Instant Scoring & Step-by-Step Review</h3>
+            <p class="feature-desc">Deterministic evaluation calculates score percentage with comprehensive rationale for every correct option.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box">📱</div>
+            <h3 class="feature-title">Accessible Responsive Interface</h3>
+            <p class="feature-desc">Engineered with WCAG principles, high contrast, smooth animations, and full mobile touch optimization.</p>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ================= VIEW 2: INTERACTIVE QUIZ INTERFACE ================= -->
+    <section id="view-quiz" class="view-section" aria-labelledby="quiz-page-title" style="display:none;">
+      
+      <!-- Quiz Header Card -->
+      <div class="quiz-header-card">
+        <div class="quiz-meta-row">
+          <div class="quiz-info-group">
+            <h2 id="quiz-page-title" class="quiz-title">Motion in a Straight Line Quiz</h2>
+            <div class="quiz-badges-list">
+              <span class="badge badge-sub" id="quiz-badge-subject">Physics</span>
+              <span class="badge badge-chap" id="quiz-badge-chapter">Motion in a Straight Line</span>
+              <span class="badge badge-diff" id="quiz-badge-diff">Medium</span>
+              <span class="badge badge-mode" id="quiz-badge-mode">
+                <span class="mode-icon">✦</span>
+                <span id="quiz-badge-mode-text">Generated by Gemini AI</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="quiz-actions-top">
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-abort-quiz">Exit Quiz</button>
+          </div>
+        </div>
+
+        <!-- Progress Bar & Indicator -->
+        <div class="quiz-progress-wrapper">
+          <div class="progress-info-row">
+            <span class="progress-label" id="progress-question-counter">Question 1 of 5</span>
+            <span class="progress-percent" id="progress-percent-text">20% Completed</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" id="quiz-progressbar">
+            <div class="progress-fill" id="quiz-progress-fill" style="width: 20%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Question Container Card -->
+      <div class="question-card" id="question-card">
+        <div class="question-header">
+          <span class="question-tag" id="current-q-tag">Question 1</span>
+          <span class="question-status-pill" id="current-q-status">Unanswered</span>
+        </div>
+
+        <div class="question-text-wrap">
+          <h3 class="question-text" id="question-text-content">Loading question...</h3>
+        </div>
+
+        <!-- Answer Options Container -->
+        <div class="options-container" id="options-container" role="radiogroup" aria-label="Question Options">
+          <!-- Populated dynamically with safe textContent -->
+        </div>
+
+        <!-- Question Navigation Footer -->
+        <div class="question-nav-bar">
+          <button type="button" class="btn btn-secondary btn-nav" id="btn-prev-q">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+              <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span>Previous</span>
+          </button>
+
+          <!-- Quick Jump Numbers Palette -->
+          <div class="question-palette" id="question-palette" aria-label="Jump to Question">
+            <!-- Populated dynamically -->
+          </div>
+
+          <button type="button" class="btn btn-primary btn-nav" id="btn-next-q">
+            <span>Next</span>
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+
+          <button type="button" class="btn btn-success btn-submit-quiz" id="btn-submit-quiz">
+            <span>Submit Quiz</span>
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= VIEW 3: RESULTS & ANSWER REVIEW ================= -->
+    <section id="view-results" class="view-section" aria-labelledby="results-page-title" style="display:none;">
+      
+      <!-- Results Score Card -->
+      <div class="results-score-card">
+        <div class="score-card-header">
+          <span class="section-tag">Assessment Complete</span>
+          <h2 id="results-page-title" class="score-card-title">Quiz Performance Report</h2>
+          <p class="score-quiz-subtitle" id="results-quiz-meta">Physics / Motion in a Straight Line / Medium</p>
+        </div>
+
+        <div class="score-main-grid">
+          
+          <!-- Percentage Ring / Badge -->
+          <div class="score-radial-box">
+            <div class="score-percent-val" id="results-percent-val">80%</div>
+            <div class="score-feedback" id="results-feedback-label">Outstanding Work!</div>
+          </div>
+
+          <!-- Score Breakdown Metrics -->
+          <div class="score-breakdown-box">
+            <div class="score-stat-card stat-correct">
+              <div class="stat-icon">✓</div>
+              <div class="stat-info">
+                <span class="stat-num" id="results-stat-correct">4</span>
+                <span class="stat-name">Correct Answers</span>
+              </div>
+            </div>
+
+            <div class="score-stat-card stat-incorrect">
+              <div class="stat-icon">✗</div>
+              <div class="stat-info">
+                <span class="stat-num" id="results-stat-incorrect">1</span>
+                <span class="stat-name">Incorrect Answers</span>
+              </div>
+            </div>
+
+            <div class="score-stat-card stat-unanswered">
+              <div class="stat-icon">○</div>
+              <div class="stat-info">
+                <span class="stat-num" id="results-stat-unanswered">0</span>
+                <span class="stat-name">Unanswered</span>
+              </div>
+            </div>
+
+            <div class="score-stat-card stat-total">
+              <div class="stat-icon">Σ</div>
+              <div class="stat-info">
+                <span class="stat-num" id="results-stat-total">5</span>
+                <span class="stat-name">Total Questions</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="results-actions-bar">
+          <button type="button" class="btn btn-secondary btn-lg" id="btn-retake-quiz">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+              <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+            </svg>
+            <span>Retake This Quiz</span>
+          </button>
+
+          <button type="button" class="btn btn-primary btn-lg" id="btn-new-quiz">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+            </svg>
+            <span>Generate Another Quiz</span>
+          </button>
+
+          <button type="button" class="btn btn-ghost btn-lg" id="btn-back-home">
+            <span>Back to Home</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Detailed Review Section -->
+      <div class="results-review-section">
+        <div class="review-header">
+          <h3 class="review-title">Detailed Question Review & Explanations</h3>
+          <p class="review-desc">Review your answers alongside official solutions and verified educational explanations.</p>
+        </div>
+
+        <div class="review-list" id="results-review-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Unanswered Questions Confirmation Modal -->
+  <div class="modal-overlay" id="unanswered-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-icon-warn">⚠️</div>
+      <h3 id="modal-title" class="modal-title">Unanswered Questions Detected</h3>
+      <p class="modal-body" id="modal-unanswered-desc">
+        You still have <strong id="modal-unanswered-count">1</strong> unanswered question(s). Are you sure you want to finalize and submit your quiz now?
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="btn-modal-cancel">Keep Answering</button>
+        <button type="button" class="btn btn-danger" id="btn-modal-confirm">Submit Anyway</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Center -->
+  <div class="toast-container" id="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- Application Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="brand-text-group">
+          <span class="brand-title">AI QUIZ MASTER</span>
+          <span class="brand-tagline">"Learn Smarter. Practice Better. Master Every Chapter."</span>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p class="footer-copy">© 2026 AI Quiz Master. Built for students, teachers, and STEM mastery.</p>
+        <p class="footer-sub">Physics • Chemistry • Mathematics | Google Gemini AI & Local Bank Fallback</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App Script -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

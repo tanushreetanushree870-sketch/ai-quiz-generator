@@ -1,0 +1,36 @@
+{
+  "name": "ai-quiz-master",
+  "version": "1.0.0",
+  "description": "AI QUIZ MASTER - Intelligent Learning & Quiz Generation Platform",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "node --test tests/quizValidation.test.js tests/localQuestionService.test.js tests/scoringService.test.js tests/quizApi.test.js"
+  },
+  "keywords": [
+    "quiz",
+    "gemini",
+    "education",
+    "physics",
+    "chemistry",
+    "mathematics",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^2.28.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
+  }
+}

@@ -1,0 +1,302 @@
+[
+  {
+    "id": "phy-um-e1",
+    "subject": "physics",
+    "chapter": "Units and Measurements",
+    "difficulty": "easy",
+    "question": "What is the SI base unit of thermodynamic temperature?",
+    "options": [
+      { "id": "A", "text": "Celsius (°C)" },
+      { "id": "B", "text": "Kelvin (K)" },
+      { "id": "C", "text": "Fahrenheit (°F)" },
+      { "id": "D", "text": "Rankine (R)" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Kelvin (K) is the SI base unit for thermodynamic temperature as defined by the International Bureau of Weights and Measures."
+  },
+  {
+    "id": "phy-um-e2",
+    "subject": "physics",
+    "chapter": "Units and Measurements",
+    "difficulty": "easy",
+    "question": "Which of the following physical quantities is dimensionless?",
+    "options": [
+      { "id": "A", "text": "Velocity gradient" },
+      { "id": "B", "text": "Refractive index" },
+      { "id": "C", "text": "Universal gravitational constant" },
+      { "id": "D", "text": "Planck's constant" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Refractive index is the ratio of the speed of light in vacuum to the speed of light in a medium (c/v), so it has no dimensions [M^0 L^0 T^0]."
+  },
+  {
+    "id": "phy-um-m1",
+    "subject": "physics",
+    "chapter": "Units and Measurements",
+    "difficulty": "medium",
+    "question": "The dimensional formula of Planck's constant (h) is equivalent to that of which quantity?",
+    "options": [
+      { "id": "A", "text": "Linear momentum" },
+      { "id": "B", "text": "Angular momentum" },
+      { "id": "C", "text": "Energy" },
+      { "id": "D", "text": "Power" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Planck's constant has units of J·s (energy × time) = [M L^2 T^-1]. Angular momentum is m·v·r = [M][L T^-1][L] = [M L^2 T^-1]."
+  },
+  {
+    "id": "phy-um-m2",
+    "subject": "physics",
+    "chapter": "Units and Measurements",
+    "difficulty": "medium",
+    "question": "If the percentage error in measuring the radius of a sphere is 2%, what is the percentage error in its volume calculation?",
+    "options": [
+      { "id": "A", "text": "2%" },
+      { "id": "B", "text": "4%" },
+      { "id": "C", "text": "6%" },
+      { "id": "D", "text": "8%" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Volume of a sphere is V = (4/3)πr^3. The relative error is ΔV/V = 3(Δr/r). Therefore, percentage error = 3 × 2% = 6%."
+  },
+  {
+    "id": "phy-um-h1",
+    "subject": "physics",
+    "chapter": "Units and Measurements",
+    "difficulty": "hard",
+    "question": "In a hypothetical system of units where velocity of light (c), Planck's constant (h), and Newton's gravitational constant (G) are taken as fundamental units, the dimension of length is proportional to:",
+    "options": [
+      { "id": "A", "text": "(h · G / c^3)^(1/2)" },
+      { "id": "B", "text": "(h · c / G)^(1/2)" },
+      { "id": "C", "text": "(G · c / h^3)^(1/2)" },
+      { "id": "D", "text": "(h · G^2 / c)^(1/2)" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Planck length is defined as l_p = √(hG / c^3), which carries dimensions of length [L]."
+  },
+  {
+    "id": "phy-mot-e1",
+    "subject": "physics",
+    "chapter": "Motion in a Straight Line",
+    "difficulty": "easy",
+    "question": "A vehicle travels 120 meters in 6 seconds at constant speed. What is its velocity?",
+    "options": [
+      { "id": "A", "text": "15 m/s" },
+      { "id": "B", "text": "20 m/s" },
+      { "id": "C", "text": "24 m/s" },
+      { "id": "D", "text": "30 m/s" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Velocity v = distance / time = 120 m / 6 s = 20 m/s."
+  },
+  {
+    "id": "phy-mot-e2",
+    "subject": "physics",
+    "chapter": "Motion in a Straight Line",
+    "difficulty": "easy",
+    "question": "What is the acceleration of a car traveling along a straight track at a constant velocity of 50 km/h?",
+    "options": [
+      { "id": "A", "text": "0 m/s²" },
+      { "id": "B", "text": "9.8 m/s²" },
+      { "id": "C", "text": "5 m/s²" },
+      { "id": "D", "text": "13.8 m/s²" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Acceleration is defined as the rate of change of velocity (dv/dt). Constant velocity means dv/dt = 0."
+  },
+  {
+    "id": "phy-mot-e3",
+    "subject": "physics",
+    "chapter": "Motion in a Straight Line",
+    "difficulty": "easy",
+    "question": "The area under a velocity-time (v-t) graph represents which physical quantity?",
+    "options": [
+      { "id": "A", "text": "Acceleration" },
+      { "id": "B", "text": "Displacement" },
+      { "id": "C", "text": "Force" },
+      { "id": "D", "text": "Power" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Displacement is the integral of velocity with respect to time: s = ∫ v dt, which equals the area under the v-t curve."
+  },
+  {
+    "id": "phy-mot-m1",
+    "subject": "physics",
+    "chapter": "Motion in a Straight Line",
+    "difficulty": "medium",
+    "question": "A particle starts from rest with uniform acceleration a = 4 m/s². What is the distance covered in the 3rd second?",
+    "options": [
+      { "id": "A", "text": "8 m" },
+      { "id": "B", "text": "10 m" },
+      { "id": "C", "text": "12 m" },
+      { "id": "D", "text": "18 m" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Distance in the nth second is S_n = u + (a/2)(2n - 1). Here u = 0, a = 4, n = 3: S_3 = 0 + (4/2)(2(3) - 1) = 2 × 5 = 10 m."
+  },
+  {
+    "id": "phy-mot-m2",
+    "subject": "physics",
+    "chapter": "Motion in a Straight Line",
+    "difficulty": "medium",
+    "question": "A stone is dropped from a cliff of height 80 m. How long does it take to reach the ground? (Take g = 10 m/s²)",
+    "options": [
+      { "id": "A", "text": "2 seconds" },
+      { "id": "B", "text": "4 seconds" },
+      { "id": "C", "text": "6 seconds" },
+      { "id": "D", "text": "8 seconds" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Using h = (1/2)gt²: 80 = (1/2)(10)t² => 80 = 5t² => t² = 16 => t = 4 seconds."
+  },
+  {
+    "id": "phy-mot-h1",
+    "subject": "physics",
+    "chapter": "Motion in a Straight Line",
+    "difficulty": "hard",
+    "question": "A train accelerates uniformly from rest to speed V, continues at speed V for time t, and then decelerates uniformly to rest. If the magnitude of acceleration is 'a' and deceleration is 'b', what is total distance traveled?",
+    "options": [
+      { "id": "A", "text": "Vt + V²/(2a) + V²/(2b)" },
+      { "id": "B", "text": "Vt + V²/(a + b)" },
+      { "id": "C", "text": "Vt + (a + b)V²/2" },
+      { "id": "D", "text": "V²t/(2(a + b))" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Distance during acceleration: s1 = V²/(2a). Distance during constant velocity: s2 = Vt. Distance during deceleration: s3 = V²/(2b). Total distance S = Vt + V²/(2a) + V²/(2b)."
+  },
+  {
+    "id": "phy-lom-e1",
+    "subject": "physics",
+    "chapter": "Laws of Motion",
+    "difficulty": "easy",
+    "question": "According to Newton's First Law of Motion, an object will remain at rest or in uniform motion unless acted upon by:",
+    "options": [
+      { "id": "A", "text": "An internal force" },
+      { "id": "B", "text": "An unbalanced net external force" },
+      { "id": "C", "text": "Gravity alone" },
+      { "id": "D", "text": "Frictional resistance" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Newton's First Law states that a body remains in its state of rest or uniform motion in a straight line unless compelled to change by a net external force."
+  },
+  {
+    "id": "phy-lom-m1",
+    "subject": "physics",
+    "chapter": "Laws of Motion",
+    "difficulty": "medium",
+    "question": "A 5 kg block rests on a horizontal surface with coefficient of static friction μ_s = 0.4. What is the minimum horizontal force required to start moving the block? (g = 9.8 m/s²)",
+    "options": [
+      { "id": "A", "text": "14.7 N" },
+      { "id": "B", "text": "19.6 N" },
+      { "id": "C", "text": "24.5 N" },
+      { "id": "D", "text": "49.0 N" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Limiting static friction f_s = μ_s × N = μ_s × mg = 0.4 × 5 × 9.8 = 19.6 N."
+  },
+  {
+    "id": "phy-lom-h1",
+    "subject": "physics",
+    "chapter": "Laws of Motion",
+    "difficulty": "hard",
+    "question": "Two masses m1 = 3 kg and m2 = 2 kg are connected over a frictionless, massless pulley (Atwood's machine). What is the magnitude of their acceleration? (g = 10 m/s²)",
+    "options": [
+      { "id": "A", "text": "1.0 m/s²" },
+      { "id": "B", "text": "2.0 m/s²" },
+      { "id": "C", "text": "2.5 m/s²" },
+      { "id": "D", "text": "4.0 m/s²" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Acceleration a = ((m1 - m2) / (m1 + m2)) × g = ((3 - 2) / (3 + 2)) × 10 = (1/5) × 10 = 2.0 m/s²."
+  },
+  {
+    "id": "phy-thm-e1",
+    "subject": "physics",
+    "chapter": "Thermodynamics",
+    "difficulty": "easy",
+    "question": "In an isothermal thermodynamic process, which of the following properties remains constant?",
+    "options": [
+      { "id": "A", "text": "Pressure" },
+      { "id": "B", "text": "Volume" },
+      { "id": "C", "text": "Temperature" },
+      { "id": "D", "text": "Entropy" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "An isothermal process is a change of a system in which the temperature remains strictly constant (ΔT = 0)."
+  },
+  {
+    "id": "phy-thm-m1",
+    "subject": "physics",
+    "chapter": "Thermodynamics",
+    "difficulty": "medium",
+    "question": "What is the efficiency of a Carnot heat engine operating between an absolute heat reservoir at 600 K and a sink at 300 K?",
+    "options": [
+      { "id": "A", "text": "25%" },
+      { "id": "B", "text": "33%" },
+      { "id": "C", "text": "50%" },
+      { "id": "D", "text": "75%" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Carnot efficiency η = 1 - (T_sink / T_source) = 1 - (300 / 600) = 1 - 0.5 = 0.50 (50%)."
+  },
+  {
+    "id": "phy-thm-h1",
+    "subject": "physics",
+    "chapter": "Thermodynamics",
+    "difficulty": "hard",
+    "question": "One mole of an ideal monatomic gas (γ = 5/3) expands adiabatically such that its volume doubles. If the initial temperature is T, what is the final temperature?",
+    "options": [
+      { "id": "A", "text": "T / 2^(2/3)" },
+      { "id": "B", "text": "T / 2^(1/3)" },
+      { "id": "C", "text": "T · 2^(2/3)" },
+      { "id": "D", "text": "T / 4" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "For an adiabatic process, T · V^(γ - 1) = constant. Here γ - 1 = 5/3 - 1 = 2/3. Thus T1 · V1^(2/3) = T2 · (2V1)^(2/3) => T2 = T1 / 2^(2/3)."
+  },
+  {
+    "id": "phy-elec-e1",
+    "subject": "physics",
+    "chapter": "Current Electricity",
+    "difficulty": "easy",
+    "question": "If three resistors of 6 Ω each are connected in parallel, what is the equivalent resistance?",
+    "options": [
+      { "id": "A", "text": "2 Ω" },
+      { "id": "B", "text": "6 Ω" },
+      { "id": "C", "text": "12 Ω" },
+      { "id": "D", "text": "18 Ω" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "For n identical resistors in parallel, R_eq = R / n = 6 Ω / 3 = 2 Ω."
+  },
+  {
+    "id": "phy-elec-m1",
+    "subject": "physics",
+    "chapter": "Current Electricity",
+    "difficulty": "medium",
+    "question": "A cylindrical copper wire of resistance R is stretched uniformly until its length is doubled. What is its new resistance?",
+    "options": [
+      { "id": "A", "text": "R" },
+      { "id": "B", "text": "2R" },
+      { "id": "C", "text": "4R" },
+      { "id": "D", "text": "8R" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "When stretched uniformly, volume V = A · L remains constant. Doubling length (L' = 2L) halves cross-sectional area (A' = A/2). Since R = ρL/A, R' = ρ(2L)/(A/2) = 4R."
+  },
+  {
+    "id": "phy-elec-h1",
+    "subject": "physics",
+    "chapter": "Current Electricity",
+    "difficulty": "hard",
+    "question": "A potentiometer wire of length 10 m has a resistance of 20 Ω. It is connected in series with a 480 Ω resistor and a 4 V battery of negligible internal resistance. What is the potential gradient along the wire?",
+    "options": [
+      { "id": "A", "text": "0.008 V/m" },
+      { "id": "B", "text": "0.016 V/m" },
+      { "id": "C", "text": "0.032 V/m" },
+      { "id": "D", "text": "0.080 V/m" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Total resistance R_total = 20 + 480 = 500 Ω. Current I = V / R_total = 4 / 500 = 0.008 A. Potential across the 10 m wire = I × R_wire = 0.008 × 20 = 0.16 V. Potential gradient k = V_wire / L = 0.16 / 10 = 0.016 V/m."
+  }
+]

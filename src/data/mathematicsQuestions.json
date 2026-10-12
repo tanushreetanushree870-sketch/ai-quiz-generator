@@ -1,0 +1,257 @@
+[
+  {
+    "id": "math-set-e1",
+    "subject": "mathematics",
+    "chapter": "Sets",
+    "difficulty": "easy",
+    "question": "If set A has 4 elements, how many subsets does set A possess in total?",
+    "options": [
+      { "id": "A", "text": "8" },
+      { "id": "B", "text": "16" },
+      { "id": "C", "text": "12" },
+      { "id": "D", "text": "32" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A set with n elements has 2^n subsets in total (including the empty set and itself). For n = 4, 2^4 = 16 subsets."
+  },
+  {
+    "id": "math-set-m1",
+    "subject": "mathematics",
+    "chapter": "Sets",
+    "difficulty": "medium",
+    "question": "In a group of 50 students, 30 like tea, 25 like coffee, and 10 like both. How many students like neither?",
+    "options": [
+      { "id": "A", "text": "5" },
+      { "id": "B", "text": "10" },
+      { "id": "C", "text": "15" },
+      { "id": "D", "text": "20" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Using principle of inclusion-exclusion: n(T ∪ C) = n(T) + n(C) - n(T ∩ C) = 30 + 25 - 10 = 45. Number liking neither = Total - n(T ∪ C) = 50 - 45 = 5."
+  },
+  {
+    "id": "math-trig-e1",
+    "subject": "mathematics",
+    "chapter": "Trigonometry",
+    "difficulty": "easy",
+    "question": "What is the exact value of sin(π/6) + cos(π/3)?",
+    "options": [
+      { "id": "A", "text": "1/2" },
+      { "id": "B", "text": "1" },
+      { "id": "C", "text": "√3 / 2" },
+      { "id": "D", "text": "√2" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "sin(π/6) = sin(30°) = 1/2. cos(π/3) = cos(60°) = 1/2. Their sum = 1/2 + 1/2 = 1."
+  },
+  {
+    "id": "math-trig-m1",
+    "subject": "mathematics",
+    "chapter": "Trigonometry",
+    "difficulty": "medium",
+    "question": "If tan(θ) = 3/4 and θ is in the first quadrant, what is the value of sin(2θ)?",
+    "options": [
+      { "id": "A", "text": "7/25" },
+      { "id": "B", "text": "12/25" },
+      { "id": "C", "text": "24/25" },
+      { "id": "D", "text": "1" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "In right triangle with sides 3, 4, hypotenuse = 5, so sin(θ) = 3/5, cos(θ) = 4/5. Using double angle formula: sin(2θ) = 2 sin(θ) cos(θ) = 2(3/5)(4/5) = 24/25."
+  },
+  {
+    "id": "math-trig-h1",
+    "subject": "mathematics",
+    "chapter": "Trigonometry",
+    "difficulty": "hard",
+    "question": "What is the product value of cos(20°) · cos(40°) · cos(80°)?",
+    "options": [
+      { "id": "A", "text": "1/4" },
+      { "id": "B", "text": "1/8" },
+      { "id": "C", "text": "1/16" },
+      { "id": "D", "text": "√3 / 8" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Using the identity cos(θ) · cos(60° - θ) · cos(60° + θ) = (1/4) cos(3θ). For θ = 20°: cos(20°) cos(40°) cos(80°) = (1/4) cos(60°) = (1/4) · (1/2) = 1/8."
+  },
+  {
+    "id": "math-quad-e1",
+    "subject": "mathematics",
+    "chapter": "Quadratic Equations",
+    "difficulty": "easy",
+    "question": "What are the roots of the quadratic equation x² - 7x + 12 = 0?",
+    "options": [
+      { "id": "A", "text": "x = 2 and x = 5" },
+      { "id": "B", "text": "x = 3 and x = 4" },
+      { "id": "C", "text": "x = -3 and x = -4" },
+      { "id": "D", "text": "x = 1 and x = 12" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Factoring: x² - 7x + 12 = (x - 3)(x - 4) = 0. Therefore the roots are x = 3 and x = 4."
+  },
+  {
+    "id": "math-quad-m1",
+    "subject": "mathematics",
+    "chapter": "Quadratic Equations",
+    "difficulty": "medium",
+    "question": "For what values of k does the equation x² + 2kx + (k + 6) = 0 have equal real roots?",
+    "options": [
+      { "id": "A", "text": "k = -2, 3" },
+      { "id": "B", "text": "k = 2, -3" },
+      { "id": "C", "text": "k = 1, -6" },
+      { "id": "D", "text": "k = 0, 6" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Equal roots require discriminant D = 0: b² - 4ac = (2k)² - 4(1)(k + 6) = 4k² - 4k - 24 = 0 => k² - k - 6 = 0 => (k - 3)(k + 2) = 0 => k = 3 or k = -2."
+  },
+  {
+    "id": "math-quad-h1",
+    "subject": "mathematics",
+    "chapter": "Quadratic Equations",
+    "difficulty": "hard",
+    "question": "If α and β are roots of x² - px + q = 0, what is the value of α³ + β³?",
+    "options": [
+      { "id": "A", "text": "p³ - 3pq" },
+      { "id": "B", "text": "p³ + 3pq" },
+      { "id": "C", "text": "p³ - pq" },
+      { "id": "D", "text": "3p³ - pq" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "By Vieta's formulas, α + β = p and αβ = q. Since α³ + β³ = (α + β)³ - 3αβ(α + β), substituting gives p³ - 3(q)(p) = p³ - 3pq."
+  },
+  {
+    "id": "math-lim-e1",
+    "subject": "mathematics",
+    "chapter": "Limits and Derivatives",
+    "difficulty": "easy",
+    "question": "What is the derivative of f(x) = 3x⁴ - 5x² + 7 with respect to x?",
+    "options": [
+      { "id": "A", "text": "12x³ - 10x" },
+      { "id": "B", "text": "12x³ - 10x + 7" },
+      { "id": "C", "text": "7x³ - 10x" },
+      { "id": "D", "text": "12x⁴ - 5x" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Using power rule: d/dx(3x⁴) = 12x³, d/dx(-5x²) = -10x, and d/dx(7) = 0. f'(x) = 12x³ - 10x."
+  },
+  {
+    "id": "math-lim-m1",
+    "subject": "mathematics",
+    "chapter": "Limits and Derivatives",
+    "difficulty": "medium",
+    "question": "What is the value of lim_(x -> 0) [sin(5x) / tan(2x)]?",
+    "options": [
+      { "id": "A", "text": "1" },
+      { "id": "B", "text": "2/5" },
+      { "id": "C", "text": "5/2" },
+      { "id": "D", "text": "10" }
+    ],
+    "correctAnswer": "C",
+    "explanation": "lim_(x -> 0) [sin(5x) / tan(2x)] = lim_(x -> 0) [(sin(5x)/5x) × 5x] / [(tan(2x)/2x) × 2x] = (1 × 5) / (1 × 2) = 5/2."
+  },
+  {
+    "id": "math-lim-h1",
+    "subject": "mathematics",
+    "chapter": "Limits and Derivatives",
+    "difficulty": "hard",
+    "question": "If y = x^(sin x) for x > 0, what is dy/dx at x = π/2?",
+    "options": [
+      { "id": "A", "text": "1" },
+      { "id": "B", "text": "π/2" },
+      { "id": "C", "text": "ln(π/2)" },
+      { "id": "D", "text": "0" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "ln y = sin(x) ln(x). Differentiating: (1/y)(dy/dx) = cos(x) ln(x) + sin(x)/x. At x = π/2, y = (π/2)^1 = π/2. cos(π/2) = 0, sin(π/2) = 1. So (1/(π/2))(dy/dx) = 0 + 1/(π/2) => dy/dx = 1."
+  },
+  {
+    "id": "math-prb-e1",
+    "subject": "mathematics",
+    "chapter": "Probability",
+    "difficulty": "easy",
+    "question": "What is the probability of obtaining a sum of 7 when two fair six-sided dice are rolled?",
+    "options": [
+      { "id": "A", "text": "1/6" },
+      { "id": "B", "text": "1/12" },
+      { "id": "C", "text": "5/36" },
+      { "id": "D", "text": "7/36" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Out of 36 sample points, the 6 pairs summing to 7 are: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1). P(sum = 7) = 6/36 = 1/6."
+  },
+  {
+    "id": "math-prb-m1",
+    "subject": "mathematics",
+    "chapter": "Probability",
+    "difficulty": "medium",
+    "question": "Two independent events A and B have P(A) = 0.4 and P(B) = 0.5. What is the value of P(A ∪ B)?",
+    "options": [
+      { "id": "A", "text": "0.90" },
+      { "id": "B", "text": "0.70" },
+      { "id": "C", "text": "0.20" },
+      { "id": "D", "text": "0.60" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Since A and B are independent, P(A ∩ B) = P(A) · P(B) = 0.4 × 0.5 = 0.20. P(A ∪ B) = P(A) + P(B) - P(A ∩ B) = 0.4 + 0.5 - 0.2 = 0.70."
+  },
+  {
+    "id": "math-prb-h1",
+    "subject": "mathematics",
+    "chapter": "Probability",
+    "difficulty": "hard",
+    "question": "Bag 1 contains 3 red and 4 black balls. Bag 2 contains 5 red and 6 black balls. One ball is drawn at random from a randomly chosen bag and found to be red. What is the probability it came from Bag 1?",
+    "options": [
+      { "id": "A", "text": "33/68" },
+      { "id": "B", "text": "35/68" },
+      { "id": "C", "text": "3/7" },
+      { "id": "D", "text": "11/24" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "P(B1) = P(B2) = 1/2. P(R|B1) = 3/7, P(R|B2) = 5/11. By Bayes' Theorem: P(B1|R) = [ (1/2)(3/7) ] / [ (1/2)(3/7) + (1/2)(5/11) ] = (3/7) / [ (33 + 35)/77 ] = (3/7) / (68/77) = (3/7) × (77/68) = 33/68."
+  },
+  {
+    "id": "math-int-e1",
+    "subject": "mathematics",
+    "chapter": "Integral Calculus",
+    "difficulty": "easy",
+    "question": "What is the definite integral ∫ (from 0 to 2) (3x²) dx?",
+    "options": [
+      { "id": "A", "text": "6" },
+      { "id": "B", "text": "8" },
+      { "id": "C", "text": "12" },
+      { "id": "D", "text": "16" }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The antiderivative of 3x² is x³. Evaluating from 0 to 2: [x³]_0^2 = 2³ - 0³ = 8."
+  },
+  {
+    "id": "math-int-m1",
+    "subject": "mathematics",
+    "chapter": "Integral Calculus",
+    "difficulty": "medium",
+    "question": "What is the value of the indefinite integral ∫ x · e^x dx?",
+    "options": [
+      { "id": "A", "text": "e^x (x - 1) + C" },
+      { "id": "B", "text": "e^x (x + 1) + C" },
+      { "id": "C", "text": "x² e^x / 2 + C" },
+      { "id": "D", "text": "e^x (1 - x) + C" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Using integration by parts ∫ u v' dx = u v - ∫ u' v dx with u = x, v' = e^x: ∫ x e^x dx = x e^x - ∫ e^x dx = e^x (x - 1) + C."
+  },
+  {
+    "id": "math-int-h1",
+    "subject": "mathematics",
+    "chapter": "Integral Calculus",
+    "difficulty": "hard",
+    "question": "What is the value of the definite integral ∫ (from 0 to π/2) [sin(x) / (sin(x) + cos(x))] dx?",
+    "options": [
+      { "id": "A", "text": "π/4" },
+      { "id": "B", "text": "π/2" },
+      { "id": "C", "text": "1" },
+      { "id": "D", "text": "0" }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Using King's property ∫_0^a f(x) dx = ∫_0^a f(a - x) dx: Let I = ∫_0^(π/2) sin x / (sin x + cos x) dx. Then I = ∫_0^(π/2) cos x / (cos x + sin x) dx. Adding both: 2I = ∫_0^(π/2) 1 dx = π/2 => I = π/4."
+  }
+]
