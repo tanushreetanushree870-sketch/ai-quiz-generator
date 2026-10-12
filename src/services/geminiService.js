@@ -144,65 +144,51 @@ export async function generateQuizWithGemini(subject, chapter, difficulty, count
 
   activeGeminiRequests++;
   const startTime = Date.now();
+  const controller = new AbortController();
+  const TIMEOUT_MS = 15000;
+  const timeoutTimer = setTimeout(() => {
+    controller.abort(new Error(`Gemini API request timed out after ${TIMEOUT_MS / 1000} seconds`));
+  }, TIMEOUT_MS);
 
   try {
     const prompt = buildPrompt(subject, chapter, difficulty, count);
     const modelName = ENV.GEMINI_MODEL;
 
-    let responseText = "";
-    let attempts = 0;
-    const maxAttempts = 1 + ENV.GEMINI_MAX_RETRIES;
-
-    while (attempts < maxAttempts) {
-      attempts++;
-      try {
-        logger.info(`Sending request to Gemini (model: ${modelName}, attempt: ${attempts})`);
-        
-        const apiCall = client.models.generateContent({
-          model: modelName,
-          contents: prompt,
-          config: {
-            systemInstruction: SYSTEM_INSTRUCTION,
-            responseMimeType: "application/json",
-            temperature: 0.7
-          }
+    // Timeout signal listener
+    const timeoutSignalPromise = new Promise((_, reject) => {
+      if (controller.signal.aborted) {
+        reject(controller.signal.reason || new Error("Gemini request timed out"));
+      } else {
+        controller.signal.addEventListener("abort", () => {
+          reject(controller.signal.reason || new Error("Gemini request timed out"));
         });
-
-        const result = await callWithTimeout(apiCall, ENV.GEMINI_TIMEOUT_MS);
-        responseText = result.text || "";
-        break; // Success
-      } catch (err) {
-        logger.warn(`Gemini API call failed on attempt ${attempts}: ${err.message}`);
-
-        // If rate limited (429), do not retry repeatedly
-        if (err.status === 429 || err.message?.includes("429") || err.message?.includes("RESOURCE_EXHAUSTED")) {
-          const rateErr = new Error("Gemini rate limit exceeded");
-          rateErr.code = "RATE_LIMITED";
-          rateErr.status = 429;
-          throw rateErr;
-        }
-
-        if (attempts >= maxAttempts) {
-          throw err;
-        }
-
-        // Exponential backoff with jitter
-        const backoffMs = Math.pow(2, attempts) * 500 + Math.random() * 200;
-        await new Promise((r) => setTimeout(r, backoffMs));
       }
-    }
+    });
 
-    // Parse and validate JSON
-    let parsedData = null;
-    const cleaned = cleanJsonString(responseText);
+    const executionPromise = (async () => {
+      logger.info(`Sending request to Gemini (model: ${modelName}) with 15s timeout`);
+      const apiCall = client.models.generateContent({
+        model: modelName,
+        contents: prompt,
+        config: {
+          systemInstruction: SYSTEM_INSTRUCTION,
+          responseMimeType: "application/json",
+          temperature: 0.7
+        }
+      });
 
-    try {
-      parsedData = JSON.parse(cleaned);
-      validateGeneratedQuiz(parsedData, count);
-    } catch (parseOrValError) {
-      logger.warn(`Initial AI response malformed or invalid: ${parseOrValError.message}. Attempting repair prompt.`);
-      // Attempt repair once
+      const result = await apiCall;
+      const responseText = result.text || "";
+
+      // Parse and validate JSON
+      const cleaned = cleanJsonString(responseText);
+      let parsedData = null;
+
       try {
+        parsedData = JSON.parse(cleaned);
+        validateGeneratedQuiz(parsedData, count);
+      } catch (parseOrValError) {
+        logger.warn(`Initial AI response malformed or invalid: ${parseOrValError.message}. Attempting repair prompt.`);
         const repairPrompt = buildRepairPrompt(cleaned, subject, chapter, difficulty, count, parseOrValError.message);
         const repairCall = client.models.generateContent({
           model: modelName,
@@ -213,19 +199,17 @@ export async function generateQuizWithGemini(subject, chapter, difficulty, count
             temperature: 0.2
           }
         });
-        const repairResult = await callWithTimeout(repairCall, ENV.GEMINI_TIMEOUT_MS);
+        const repairResult = await repairCall;
         const repairedCleaned = cleanJsonString(repairResult.text || "");
         parsedData = JSON.parse(repairedCleaned);
         validateGeneratedQuiz(parsedData, count);
         logger.info("Successfully repaired malformed Gemini quiz response");
-      } catch (repairErr) {
-        logger.error(`Repair attempt failed: ${repairErr.message}`);
-        const malformedErr = new Error("Failed to generate valid quiz structure from AI");
-        malformedErr.code = "AI_MALFORMED";
-        throw malformedErr;
       }
-    }
 
+      return parsedData;
+    })();
+
+    const parsedData = await Promise.race([executionPromise, timeoutSignalPromise]);
     const duration = Date.now() - startTime;
     logger.info(`Gemini quiz generation completed in ${duration}ms`);
 
@@ -247,7 +231,11 @@ export async function generateQuizWithGemini(subject, chapter, difficulty, count
       generationMode: "ai",
       questions: validatedQuestions
     };
+  } catch (error) {
+    console.error('[Quiz Generation Error]:', error);
+    throw error;
   } finally {
+    clearTimeout(timeoutTimer);
     activeGeminiRequests = Math.max(0, activeGeminiRequests - 1);
   }
 }

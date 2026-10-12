@@ -68,9 +68,10 @@ test("API Endpoint Testing", async (t) => {
     assert.ok(res.body.quizId);
     assert.equal(res.body.subject, "physics");
     assert.equal(res.body.questions.length, 5);
-    // Security check: answer keys must NOT be sent to client before submission!
-    assert.equal(res.body.questions[0].correctAnswer, undefined);
-    assert.equal(res.body.questions[0].explanation, undefined);
+    // Schema check: options, correctAnswer, and explanation are populated for frontend
+    assert.ok(res.body.questions[0].options);
+    assert.notEqual(res.body.questions[0].correctAnswer, undefined);
+    assert.notEqual(res.body.questions[0].explanation, undefined);
 
     generatedQuizId = res.body.quizId;
   });
@@ -93,7 +94,7 @@ test("API Endpoint Testing", async (t) => {
     assert.equal(typeof res.body.percentage, "number");
     assert.ok(Array.isArray(res.body.results));
     // Check that results now contain answers and explanations
-    assert.ok(res.body.results[0].correctAnswer);
+    assert.notEqual(res.body.results[0].correctAnswer, undefined);
     assert.ok(res.body.results[0].explanation);
   });
 

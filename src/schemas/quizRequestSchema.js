@@ -10,16 +10,8 @@ export const quizRequestSchema = z.object({
     .refine((val) => ALLOWED_SUBJECTS.includes(val), {
       message: `Subject must be one of: ${ALLOWED_SUBJECTS.join(", ")}`
     }),
-  chapter: z
-    .string({ required_error: "Chapter is required" })
-    .trim()
-    .transform((val) => sanitizeString(val, 100))
-    .refine((val) => val.length >= 2, {
-      message: "Chapter name must contain at least 2 valid characters"
-    })
-    .refine((val) => val.length <= 100, {
-      message: "Chapter name cannot exceed 100 characters"
-    }),
+  chapter: z.string().optional(),
+  topic: z.string().optional(),
   difficulty: z
     .string({ required_error: "Difficulty is required" })
     .trim()
@@ -33,4 +25,22 @@ export const quizRequestSchema = z.object({
     .refine((val) => ALLOWED_QUESTION_COUNTS.includes(val), {
       message: `Question count must be one of: ${ALLOWED_QUESTION_COUNTS.join(", ")}`
     })
-}).strict();
+}).transform((data, ctx) => {
+  const targetChapter = (data.chapter || data.topic || "").trim();
+  const sanitized = sanitizeString(targetChapter, 100);
+  if (sanitized.length < 2) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["chapter"],
+      message: "Chapter name must contain at least 2 valid characters"
+    });
+    return z.NEVER;
+  }
+  return {
+    subject: data.subject,
+    chapter: sanitized,
+    topic: sanitized,
+    difficulty: data.difficulty,
+    count: data.count
+  };
+});

@@ -5,6 +5,8 @@ import { quizGenerationLimiter } from "../middleware/rateLimiter.js";
 const router = Router();
 
 router.post("/quiz/generate", quizGenerationLimiter, handleGenerateQuiz);
+router.post("/generate-quiz", quizGenerationLimiter, handleGenerateQuiz);
+router.post("/quiz", quizGenerationLimiter, handleGenerateQuiz);
 router.post("/quiz/submit", handleSubmitQuiz);
 router.get("/quiz/health", handleGetQuizHealth);
 

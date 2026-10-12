@@ -38,7 +38,8 @@ const elements = {
 
   // Views
   viewHome: document.getElementById("view-home"),
-  viewQuiz: document.getElementById("view-quiz"),
+  viewConfigure: document.getElementById("configure"),
+  viewQuiz: document.getElementById("quiz-view") || document.getElementById("view-quiz"),
   viewResults: document.getElementById("view-results"),
 
   // Form Controls
@@ -138,18 +139,59 @@ function handleHashNavigation() {
     }
   } else {
     switchView("home");
+    if (hash === "#configure" || hash === "#features") {
+      const target = document.querySelector(hash);
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 30);
+      }
+    }
   }
 }
 
 function switchView(viewName) {
-  elements.viewHome.style.display = viewName === "home" ? "block" : "none";
-  elements.viewQuiz.style.display = viewName === "quiz" ? "block" : "none";
-  elements.viewResults.style.display = viewName === "results" ? "block" : "none";
+  const homeView = elements.viewHome || document.getElementById("view-home");
+  const configSection = elements.viewConfigure || document.getElementById("configure");
+  const quizView = elements.viewQuiz || document.getElementById("quiz-view") || document.getElementById("view-quiz");
+  const resultsView = elements.viewResults || document.getElementById("view-results");
+
+  if (viewName === "quiz") {
+    if (homeView) homeView.style.display = "none";
+    if (configSection) configSection.style.display = "none";
+    if (resultsView) resultsView.style.display = "none";
+    if (quizView) {
+      quizView.style.display = "block";
+      quizView.classList.add("active");
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else if (viewName === "results") {
+    if (homeView) homeView.style.display = "none";
+    if (configSection) configSection.style.display = "none";
+    if (quizView) quizView.style.display = "none";
+    if (resultsView) {
+      resultsView.style.display = "block";
+      resultsView.classList.add("active");
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    // "home" / "configure"
+    if (quizView) quizView.style.display = "none";
+    if (resultsView) resultsView.style.display = "none";
+    if (homeView) homeView.style.display = "block";
+    if (configSection) configSection.style.display = "block";
+
+    const hash = window.location.hash;
+    if (!hash || hash === "#home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
 
   // Update nav link styles
-  elements.navHome.classList.toggle("active", viewName === "home");
-  elements.navCreate.classList.toggle("active", viewName === "home" && window.location.hash === "#configure");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  const currentHash = window.location.hash;
+  if (elements.navHome) elements.navHome.classList.toggle("active", viewName === "home" && (!currentHash || currentHash === "#home"));
+  if (elements.navCreate) elements.navCreate.classList.toggle("active", viewName === "home" && currentHash === "#configure");
+  if (elements.navFeatures) elements.navFeatures.classList.toggle("active", viewName === "home" && currentHash === "#features");
 }
 
 // ================= SYSTEM HEALTH & CONFIG =================
@@ -245,6 +287,81 @@ function initEventListeners() {
     state.currentQuiz = null;
     state.lastResult = null;
     window.location.hash = "#home";
+  });
+
+  // Smooth Scrolling & Mobile Touch for Anchor Navigation
+  initSmoothScrollLinks();
+
+  // Interactive Feature Cards Click & Touch
+  initFeatureCardsInteractivity();
+}
+
+function initSmoothScrollLinks() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    const handleAnchorClick = function (e) {
+      const href = this.getAttribute("href");
+      if (!href || href === "#") return;
+
+      e.preventDefault();
+
+      if (href === "#home" || href === "#configure" || href === "#features") {
+        switchView("home");
+      }
+
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else if (href === "#home") {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      if (window.location.hash !== href) {
+        history.pushState(null, "", href);
+      }
+
+      // Update nav link active state
+      if (elements.navHome) elements.navHome.classList.toggle("active", href === "#home");
+      if (elements.navCreate) elements.navCreate.classList.toggle("active", href === "#configure");
+      if (elements.navFeatures) elements.navFeatures.classList.toggle("active", href === "#features");
+    };
+
+    anchor.addEventListener('click', handleAnchorClick);
+  });
+}
+
+function initFeatureCardsInteractivity() {
+  const cards = document.querySelectorAll(".feature-card");
+  cards.forEach(card => {
+    const handleFeatureClick = () => {
+      // Trigger subtle pulse animation
+      card.classList.remove("card-active-pulse");
+      void card.offsetWidth;
+      card.classList.add("card-active-pulse");
+
+      const title = card.querySelector(".feature-title")?.textContent || "Feature";
+
+      // Ensure home view is displayed
+      switchView("home");
+
+      // Scroll smoothly down/up to #configure (Create Quiz)
+      const configSection = document.getElementById("configure");
+      if (configSection) {
+        configSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        configSection.classList.remove("highlight-target");
+        void configSection.offsetWidth;
+        configSection.classList.add("highlight-target");
+      }
+
+      showToast(`✦ ${title}: Ready to practice? Configure your customized quiz below!`, "info");
+    };
+
+    card.addEventListener("click", handleFeatureClick);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleFeatureClick();
+      }
+    });
   });
 }
 
@@ -464,16 +581,30 @@ async function handleGenerateQuizSubmit(e) {
       body: JSON.stringify({
         subject: state.selectedSubject,
         chapter: targetChapter,
+        topic: targetChapter,
         difficulty: state.selectedDifficulty,
         count: state.selectedCount
       })
     });
 
+    if (!response.ok) {
+      let errMsg = "Failed to load quiz. Please try again.";
+      try {
+        const errorData = await response.json();
+        if (errorData?.error?.message) {
+          errMsg = errorData.error.message;
+        } else if (errorData?.message) {
+          errMsg = errorData.message;
+        }
+      } catch (_) {}
+      throw new Error(errMsg);
+    }
+
     const data = await response.json();
 
-    if (!response.ok) {
-      const errMsg = data.error?.message || "Failed to generate quiz. Please try again.";
-      throw new Error(errMsg);
+    // Validate that data.questions exists and is a non-empty array
+    if (!data || !Array.isArray(data.questions) || data.questions.length === 0) {
+      throw new Error("Failed to load quiz. Please try again.");
     }
 
     // Quiz Generation Succeeded
@@ -482,11 +613,16 @@ async function handleGenerateQuizSubmit(e) {
     state.currentQuestionIndex = 0;
 
     showToast("Quiz generated successfully!", "success");
+    elements.generateStatusMsg.textContent = "";
+
+    // Switch views from #configure to #quiz-view and render question 1
+    switchView("quiz");
     initializeQuizView();
     window.location.hash = "#quiz";
   } catch (err) {
-    showToast(err.message, "error");
-    elements.generateStatusMsg.textContent = `Error: ${err.message}`;
+    const displayMsg = err.message || "Failed to load quiz. Please try again.";
+    showToast(displayMsg, "error");
+    elements.generateStatusMsg.textContent = `Error: ${displayMsg}`;
   } finally {
     state.isGenerating = false;
     elements.btnGenerate.disabled = false;
@@ -497,12 +633,14 @@ async function handleGenerateQuizSubmit(e) {
 // ================= QUIZ INTERFACE VIEW =================
 function initializeQuizView() {
   const quiz = state.currentQuiz;
-  if (!quiz) return;
+  if (!quiz || !Array.isArray(quiz.questions) || quiz.questions.length === 0) return;
+
+  const topicName = quiz.topic || quiz.chapter || "Quiz";
 
   // Update Header Badges
-  elements.quizPageTitle.textContent = quiz.title || `${quiz.chapter} Quiz`;
+  elements.quizPageTitle.textContent = quiz.title || `${topicName} Quiz`;
   elements.quizBadgeSubject.textContent = capitalize(quiz.subject);
-  elements.quizBadgeChapter.textContent = quiz.chapter;
+  elements.quizBadgeChapter.textContent = topicName;
   elements.quizBadgeDiff.textContent = capitalize(quiz.difficulty);
 
   // Generation Mode Badge
@@ -515,15 +653,16 @@ function initializeQuizView() {
   }
 
   buildQuestionPalette();
+  state.currentQuestionIndex = 0;
   renderCurrentQuestion();
 }
 
 function buildQuestionPalette() {
   elements.questionPalette.innerHTML = "";
+  if (!state.currentQuiz?.questions) return;
   const total = state.currentQuiz.questions.length;
 
   for (let i = 0; i < total; i++) {
-    const q = state.currentQuiz.questions[i];
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "palette-btn";
@@ -536,6 +675,7 @@ function buildQuestionPalette() {
 }
 
 function navigateQuestion(newIndex) {
+  if (!state.currentQuiz?.questions) return;
   const total = state.currentQuiz.questions.length;
   if (newIndex < 0 || newIndex >= total) return;
 
@@ -545,7 +685,11 @@ function navigateQuestion(newIndex) {
 
 function renderCurrentQuestion() {
   const quiz = state.currentQuiz;
+  if (!quiz || !Array.isArray(quiz.questions) || quiz.questions.length === 0) return;
+
   const currentQ = quiz.questions[state.currentQuestionIndex];
+  if (!currentQ) return;
+
   const total = quiz.questions.length;
   const currNum = state.currentQuestionIndex + 1;
 
@@ -568,8 +712,13 @@ function renderCurrentQuestion() {
   elements.optionsContainer.innerHTML = "";
   const selectedOptionId = state.userAnswers.get(currentQ.id);
 
-  currentQ.options.forEach(opt => {
-    const isSelected = selectedOptionId === opt.id;
+  const optionsList = Array.isArray(currentQ.options) ? currentQ.options : [];
+  optionsList.forEach((opt, idx) => {
+    const optLetter = ["A", "B", "C", "D"][idx] || String(idx + 1);
+    const optText = typeof opt === "object" && opt !== null && opt.text !== undefined ? opt.text : String(opt);
+    const optId = typeof opt === "object" && opt !== null && opt.id !== undefined ? opt.id : idx;
+
+    const isSelected = selectedOptionId === optId || selectedOptionId === optLetter || selectedOptionId === idx;
 
     const optBtn = document.createElement("button");
     optBtn.type = "button";
@@ -579,16 +728,16 @@ function renderCurrentQuestion() {
 
     const keyBox = document.createElement("span");
     keyBox.className = "option-key";
-    keyBox.textContent = opt.id;
+    keyBox.textContent = optLetter;
 
     const textSpan = document.createElement("span");
     textSpan.className = "option-text";
-    textSpan.textContent = opt.text; // SAFELY textContent
+    textSpan.textContent = optText; // SAFELY textContent
 
     optBtn.appendChild(keyBox);
     optBtn.appendChild(textSpan);
 
-    optBtn.addEventListener("click", () => handleSelectOption(currentQ.id, opt.id));
+    optBtn.addEventListener("click", () => handleSelectOption(currentQ.id, optId));
 
     elements.optionsContainer.appendChild(optBtn);
   });
@@ -742,12 +891,17 @@ function renderResultsView() {
     const optGrid = document.createElement("div");
     optGrid.className = "review-options-grid";
 
-    item.options.forEach(opt => {
+    const optionsList = Array.isArray(item.options) ? item.options : [];
+    optionsList.forEach((opt, optIdx) => {
       const optEl = document.createElement("div");
       optEl.className = "review-opt";
 
-      const isThisCorrect = opt.id === item.correctAnswer;
-      const isThisUserSelected = opt.id === item.selectedAnswer;
+      const optLetter = ["A", "B", "C", "D"][optIdx] || String(optIdx + 1);
+      const optText = typeof opt === "object" && opt !== null && opt.text !== undefined ? opt.text : String(opt);
+      const optId = typeof opt === "object" && opt !== null && opt.id !== undefined ? opt.id : optIdx;
+
+      const isThisCorrect = optId === item.correctAnswer || optLetter === item.correctAnswer || optIdx === item.correctAnswer;
+      const isThisUserSelected = optId === item.selectedAnswer || optLetter === item.selectedAnswer || optIdx === item.selectedAnswer;
 
       if (isThisCorrect) {
         optEl.classList.add("opt-correct");
@@ -757,10 +911,10 @@ function renderResultsView() {
       }
 
       const keySpan = document.createElement("strong");
-      keySpan.textContent = `[${opt.id}]`;
+      keySpan.textContent = `[${optLetter}]`;
 
       const textSpan = document.createElement("span");
-      textSpan.textContent = opt.text;
+      textSpan.textContent = ` ${optText}`;
 
       optEl.appendChild(keySpan);
       optEl.appendChild(textSpan);

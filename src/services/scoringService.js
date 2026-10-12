@@ -16,9 +16,33 @@ export function evaluateQuizSubmission(storedQuestions, submittedAnswers) {
   let unansweredCount = 0;
 
   const results = storedQuestions.map((q) => {
-    const selected = answerMap.get(q.id) || null;
+    let selected = answerMap.get(q.id);
+    if (selected === undefined) {
+      selected = answerMap.get(String(q.id));
+    }
+    if (selected === undefined) {
+      selected = null;
+    }
+
     const isUnanswered = selected === null || selected === undefined || selected === "";
-    const isCorrect = !isUnanswered && selected === q.correctAnswer;
+    let isCorrect = false;
+
+    if (!isUnanswered) {
+      if (selected === q.correctAnswer) {
+        isCorrect = true;
+      } else if (typeof q.correctAnswer === "number") {
+        const letters = ["A", "B", "C", "D"];
+        if (letters[q.correctAnswer] === selected || String(q.correctAnswer) === String(selected)) {
+          isCorrect = true;
+        }
+      } else if (typeof q.correctAnswer === "string") {
+        const letterMap = { A: 0, B: 1, C: 2, D: 3 };
+        const upper = q.correctAnswer.trim().toUpperCase();
+        if (letterMap[upper] === selected || String(letterMap[upper]) === String(selected)) {
+          isCorrect = true;
+        }
+      }
+    }
 
     if (isUnanswered) {
       unansweredCount++;

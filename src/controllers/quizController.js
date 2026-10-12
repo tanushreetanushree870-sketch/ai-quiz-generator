@@ -12,6 +12,7 @@ export async function handleGenerateQuiz(req, res, next) {
     const quiz = await createQuiz(validatedBody);
     return res.status(200).json(quiz);
   } catch (err) {
+    console.error('[Quiz Generation Error]:', err);
     next(err);
   }
 }

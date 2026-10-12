@@ -1,10 +1,46 @@
 import { ENV, isAiConfigured } from "../config/environment.js";
 import { quizCache } from "./cacheService.js";
 import { generateQuizWithGemini } from "./geminiService.js";
-import { getLocalQuiz } from "./localQuestionService.js";
+import { getLocalQuiz, getFallbackQuizFromSubject } from "./localQuestionService.js";
 import { evaluateQuizSubmission } from "./scoringService.js";
 import { createConflictError, createNotFoundError, createServiceUnavailableError } from "../utils/httpErrors.js";
 import { logger } from "../utils/logger.js";
+
+function capitalizeWord(str) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function formatQuestionToSchema(q, index) {
+  // Format options as array of strings
+  let options = [];
+  if (Array.isArray(q.options)) {
+    options = q.options.map(o => (typeof o === "object" && o !== null && o.text !== undefined ? o.text : String(o)));
+  }
+
+  // Determine 0-based integer index for correctAnswer
+  let correctAnswer = 0;
+  if (typeof q.correctAnswer === "number") {
+    correctAnswer = q.correctAnswer;
+  } else if (typeof q.correctAnswer === "string") {
+    const letter = q.correctAnswer.trim().toUpperCase();
+    const map = { A: 0, B: 1, C: 2, D: 3 };
+    if (map[letter] !== undefined) {
+      correctAnswer = map[letter];
+    } else {
+      const foundIdx = options.indexOf(q.correctAnswer);
+      correctAnswer = foundIdx >= 0 ? foundIdx : 0;
+    }
+  }
+
+  return {
+    id: q.id !== undefined ? q.id : index + 1,
+    question: q.question,
+    options,
+    correctAnswer,
+    explanation: q.explanation || ""
+  };
+}
 
 // Bounded in-memory store for active quiz sessions
 class QuizSessionStore {
@@ -49,34 +85,34 @@ export const sessionStore = new QuizSessionStore(
  * Handles the complete quiz generation workflow:
  * Caching -> AI generation -> Local question bank fallback.
  */
-export async function createQuiz({ subject, chapter, difficulty, count }) {
-  const cacheKey = quizCache.generateKey(subject, chapter, difficulty, count);
+export async function createQuiz({ subject, chapter, topic, difficulty, count }) {
+  const targetChapter = chapter || topic;
+  const cacheKey = quizCache.generateKey(subject, targetChapter, difficulty, count);
 
   // 1. Check existing cached quiz
   const cached = quizCache.get(cacheKey);
   if (cached) {
     logger.info(`Serving quiz from bounded response cache: ${cacheKey}`);
     const quizId = `cache-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
-    
-    // Store in active sessions for secure server-side evaluation
+    const formattedQuestions = cached.questions.map((q, idx) => formatQuestionToSchema(q, idx));
+
+    // Store in active sessions for secure evaluation
     sessionStore.set(quizId, {
-      storedQuestions: cached.questions,
+      storedQuestions: formattedQuestions,
       createdAt: Date.now(),
       isSubmitted: false
     });
 
+    const topicName = cached.topic || cached.chapter || targetChapter;
     return {
       quizId,
-      title: cached.title,
-      subject: cached.subject,
-      chapter: cached.chapter,
-      difficulty: cached.difficulty,
+      subject: capitalizeWord(cached.subject || subject),
+      topic: topicName,
+      chapter: topicName,
+      difficulty: capitalizeWord(cached.difficulty || difficulty),
+      title: cached.title || `${topicName} Quiz`,
       generationMode: "cache",
-      questions: cached.questions.map(q => ({
-        id: q.id,
-        question: q.question,
-        options: q.options
-      }))
+      questions: formattedQuestions
     };
   }
 
@@ -87,10 +123,11 @@ export async function createQuiz({ subject, chapter, difficulty, count }) {
     // Check if AI generation is configured
     if (isAiConfigured()) {
       try {
-        result = await generateQuizWithGemini(subject, chapter, difficulty, count);
-        logger.info(`Generated quiz via Gemini AI for "${chapter}"`);
+        result = await generateQuizWithGemini(subject, targetChapter, difficulty, count);
+        logger.info(`Generated quiz via Gemini AI for "${targetChapter}"`);
       } catch (aiErr) {
-        logger.warn(`AI generation unavailable or failed: ${aiErr.message}. Attempting local fallback.`);
+        console.error('[Quiz Generation Error]:', aiErr);
+        logger.warn(`AI generation unavailable or failed: ${aiErr.message}. Automatically falling back to offline local question bank.`);
       }
     } else {
       logger.info(`Gemini API key not configured. Using local question bank.`);
@@ -98,19 +135,21 @@ export async function createQuiz({ subject, chapter, difficulty, count }) {
 
     // 3. Fallback to local question bank if AI was skipped or failed
     if (!result) {
-      const localResult = getLocalQuiz(subject, chapter, difficulty, count);
+      const localResult = getLocalQuiz(subject, targetChapter, difficulty, count);
       if (localResult) {
         result = localResult;
-        logger.info(`Successfully generated quiz from local question bank for "${chapter}"`);
+        logger.info(`Successfully generated quiz from local question bank for "${targetChapter}"`);
+      } else {
+        result = getFallbackQuizFromSubject(subject, targetChapter, difficulty, count);
+        if (result) {
+          logger.info(`Successfully generated fallback quiz from subject "${subject}" for "${targetChapter}"`);
+        }
       }
     }
 
-    // If still no result, either custom chapter has no questions or local bank insufficient
+    // Safety check: ensure result exists
     if (!result) {
-      const msg = isAiConfigured()
-        ? `The AI service is temporarily unavailable, and the local question bank does not have enough verified questions for "${chapter}" (${difficulty}, ${count} questions). Please try selecting a predefined chapter.`
-        : `Gemini AI is not configured, and no local fallback questions exist for custom chapter "${chapter}". Please select a predefined chapter or configure your GEMINI_API_KEY.`;
-      throw createServiceUnavailableError(msg);
+      result = getFallbackQuizFromSubject(subject, targetChapter, difficulty, count);
     }
 
     // Save in cache (full quiz with answers and explanations)
@@ -120,26 +159,25 @@ export async function createQuiz({ subject, chapter, difficulty, count }) {
 
   // Assign a distinct session quizId
   const sessionQuizId = fullQuiz.quizId || `session-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+  const formattedQuestions = fullQuiz.questions.map((q, idx) => formatQuestionToSchema(q, idx));
 
   sessionStore.set(sessionQuizId, {
-    storedQuestions: fullQuiz.questions,
+    storedQuestions: formattedQuestions,
     createdAt: Date.now(),
     isSubmitted: false
   });
 
-  // Return to client WITHOUT correct answers and explanations for quiz integrity
+  const topicName = fullQuiz.topic || fullQuiz.chapter || targetChapter;
+
   return {
     quizId: sessionQuizId,
-    title: fullQuiz.title,
-    subject: fullQuiz.subject,
-    chapter: fullQuiz.chapter,
-    difficulty: fullQuiz.difficulty,
-    generationMode: fullQuiz.generationMode,
-    questions: fullQuiz.questions.map(q => ({
-      id: q.id,
-      question: q.question,
-      options: q.options
-    }))
+    subject: fullQuiz.subject || subject,
+    topic: topicName,
+    chapter: topicName,
+    difficulty: fullQuiz.difficulty || difficulty,
+    title: fullQuiz.title || `${topicName} Quiz`,
+    generationMode: fullQuiz.generationMode || "local",
+    questions: formattedQuestions
   };
 }
 

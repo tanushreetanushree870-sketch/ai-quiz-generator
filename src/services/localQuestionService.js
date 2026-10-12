@@ -141,3 +141,45 @@ export function getAllLocalQuestionsCount() {
     mathematics: QUESTION_BANK.mathematics.length
   };
 }
+
+/**
+ * Guaranteed fallback if specific chapter or difficulty doesn't have enough questions.
+ * Pulls questions from the subject pool so quiz generation never hangs or fails.
+ */
+export function getFallbackQuizFromSubject(subject, chapter, difficulty, count = 5) {
+  const normSub = normalizeSubject(subject);
+  const normChap = normalizeChapter(chapter) || "General";
+  const normDiff = normalizeDifficulty(difficulty) || "medium";
+
+  const pool = QUESTION_BANK[normSub] || QUESTION_BANK.physics || [];
+  if (pool.length === 0) return null;
+
+  const shuffled = shuffle(pool);
+  const selected = [];
+  while (selected.length < count) {
+    for (const q of shuffled) {
+      if (selected.length < count) {
+        selected.push(q);
+      }
+    }
+  }
+
+  const finalQuestions = selected.map((q, idx) => ({
+    id: q.id ? `${q.id}-${idx}` : `q-${idx + 1}`,
+    question: q.question,
+    options: q.options.map(o => ({ id: o.id, text: o.text })),
+    correctAnswer: q.correctAnswer,
+    explanation: q.explanation
+  }));
+
+  return {
+    quizId: `local-${normSub}-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`,
+    title: `${normChap} Quiz`,
+    subject: normSub,
+    chapter: normChap,
+    difficulty: normDiff,
+    generationMode: "local",
+    questions: finalQuestions
+  };
+}
+

@@ -4,10 +4,10 @@ dotenv.config();
 export const ENV = {
   PORT: parseInt(process.env.PORT || "3000", 10),
   NODE_ENV: process.env.NODE_ENV || "development",
-  
+
   // Gemini API
   GEMINI_API_KEY: process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : "",
-  GEMINI_MODEL: process.env.GEMINI_MODEL || "gemini-flash-latest",
+  GEMINI_MODEL: process.env.GEMINI_MODEL || "gemini-3.8-flash",
   GEMINI_TIMEOUT_MS: parseInt(process.env.GEMINI_TIMEOUT_MS || "30000", 10),
   GEMINI_MAX_RETRIES: parseInt(process.env.GEMINI_MAX_RETRIES || "2", 10),
   GEMINI_MAX_CONCURRENT_REQUESTS: parseInt(process.env.GEMINI_MAX_CONCURRENT_REQUESTS || "3", 10),
